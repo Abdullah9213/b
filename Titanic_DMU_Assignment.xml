@@ -1,63 +1,48 @@
 <_ROOT_ EMVERSION="15.3" ORIENTATION="HORIZONTAL">
   <Workspace>
-
     <NODES>
+
       <!-- 1. File Import -->
       <NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS"
-            COMPONENT="FileImport"
+            COMPONENT="File Import"
             ID="FIMPORT"
             X="100" Y="300"
-            DESCRIPTION="Import Titanic CSV"
-            TOOLTYPE="SAMPLE" TOOLPREFIX="FIMPORT">
+            DESCRIPTION="Import Titanic CSV">
         <PROPERTIES
-          Location="CATALOG"
-          Catalog="SASHELP.EMSMAP.Fimport.SOURCE"
-          ImportType="Local"
-          GuessRows="500"
-          Delimiter=","
-          NameRow="Y"
-          SkipRows="0"
-          MaxRows="1000000"
-          MaxCols="10000"
-          FileType="csv"
           FileName="H:\Downloads\titanic.csv"
-          AccessTable="NoTableName"
+          FileType="csv"
+          Delimiter=","
+          GuessRows="500"
+          NameRow="Y"
           Role="TRAIN"
           Seed="42539"
-          AdvancedAdvisor="Y"
-          RunAction="Train" />
+          AdvancedAdvisor="Y" />
       </NODE>
 
       <!-- 2. Data Partition -->
       <NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS"
-            COMPONENT="DataPartition"
+            COMPONENT="Data Partition"
             ID="DPART"
             X="350" Y="300"
-            DESCRIPTION="Partition Data 60/40"
-            TOOLTYPE="SAMPLE" TOOLPREFIX="DPART">
+            DESCRIPTION="Partition Data 60/40">
         <PROPERTIES
           TrainPercent="60"
           ValidatePercent="40"
           TestPercent="0"
           Seed="42539"
-          AdvancedAdvisor="Y"
-          RunAction="Train" />
+          AdvancedAdvisor="Y" />
       </NODE>
 
       <!-- 3. Decision Tree -->
       <NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS"
-            COMPONENT="DecisionTree"
-            ID="DTREE"
+            COMPONENT="Tree"
+            ID="TREE"
             X="600" Y="200"
-            DESCRIPTION="Decision Tree Model"
-            TOOLTYPE="SAMPLE" TOOLPREFIX="DTREE">
+            DESCRIPTION="Decision Tree Model">
         <PROPERTIES
           Criterion="Gini"
           MaxDepth="10"
-          MinLeafSize="5"
-          Seed="42539"
-          AdvancedAdvisor="Y"
-          RunAction="Train" />
+          AdvancedAdvisor="Y" />
       </NODE>
 
       <!-- 4. Regression -->
@@ -65,41 +50,37 @@
             COMPONENT="Regression"
             ID="REG"
             X="600" Y="400"
-            DESCRIPTION="Logistic Regression Model"
-            TOOLTYPE="SAMPLE" TOOLPREFIX="REG">
+            DESCRIPTION="Logistic Regression">
         <PROPERTIES
           ModelType="Logistic"
           SelectionMethod="Stepwise"
-          Seed="42539"
-          AdvancedAdvisor="Y"
-          RunAction="Train" />
+          AdvancedAdvisor="Y" />
       </NODE>
 
       <!-- 5. Model Comparison -->
       <NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS"
-            COMPONENT="ModelComparison"
+            COMPONENT="Model Comparison"
             ID="MCMP"
             X="850" Y="300"
-            DESCRIPTION="Compare Models"
-            TOOLTYPE="SAMPLE" TOOLPREFIX="MCMP">
+            DESCRIPTION="Compare Models">
         <PROPERTIES
           SelectionStatistic="ASE"
-          AdvancedAdvisor="Y"
-          RunAction="Train" />
+          AdvancedAdvisor="Y" />
       </NODE>
+
     </NODES>
 
-    <!-- Connections -->
+    <!-- Node connections -->
     <CONNECTIONS>
       <CONNECTION FROM="FIMPORT" TO="DPART" />
-      <CONNECTION FROM="DPART" TO="DTREE" />
+      <CONNECTION FROM="DPART" TO="TREE" />
       <CONNECTION FROM="DPART" TO="REG" />
-      <CONNECTION FROM="DTREE" TO="MCMP" />
+      <CONNECTION FROM="TREE" TO="MCMP" />
       <CONNECTION FROM="REG" TO="MCMP" />
     </CONNECTIONS>
 
     <NOTES>
-      <DATA>Automatically generated Titanic analysis flow with AdvancedAdvisor=Y and seed=42539.</DATA>
+      <DATA>Working Titanic flow - File Import → Partition → Tree + Regression → Model Comparison</DATA>
     </NOTES>
 
   </Workspace>
