@@ -1,201 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Titanic Data Mining Assignment Diagram - Ready to Import
-  Data: titanic.csv
-  File Path: H:/Downloads/titanic.csv
-  Seed: 42539
-  Target Variable: Survived
--->
-<EMDiagram version="1.0">
-  <Properties>
-    <Property name="DiagramName">Titanic_DMU_Assignment</Property>
-    <Property name="Description">Automated Titanic Data Mining Flow for DMU Assignment</Property>
-  </Properties>
+<Project version="15.1" name="DMU_Assignment1_Project">
+    <Diagram name="DMU_Assignment1">
+        <!-- DiagramLayout for visual representation. Coordinates are approximate. -->
+        <DiagramLayout version="15.1" layoutManager="EMinerLayoutManager">
+            <LayoutNode id="n1" x="50" y="250" width="100" height="40"/>
+            <LayoutNode id="n2" x="175" y="250" width="100" height="40"/>
+            <LayoutNode id="n3" x="300" y="250" width="100" height="40"/>
+            <LayoutNode id="n4" x="425" y="250" width="100" height="40"/>
+            <LayoutNode id="n5" x="550" y="250" width="100" height="40"/>
+            <LayoutNode id="n6" x="675" y="250" width="100" height="40"/>
+            <!-- Decision Tree nodes -->
+            <LayoutNode id="n7" x="850" y="50" width="100" height="40"/>
+            <LayoutNode id="n8" x="850" y="125" width="100" height="40"/>
+            <LayoutNode id="n9" x="850" y="200" width="100" height="40"/>
+            <LayoutNode id="n10" x="850" y="275" width="100" height="40"/>
+            <!-- Neural Network nodes -->
+            <LayoutNode id="n11" x="850" y="350" width="100" height="40"/>
+            <LayoutNode id="n12" x="850" y="425" width="100" height="40"/>
+            <LayoutNode id="n13" x="850" y="500" width="100" height="40"/>
+            <LayoutNode id="n14" x="850" y="575" width="100" height="40"/>
+            <!-- Scoring and comparison -->
+            <LayoutNode id="n15" x="1000" y="312.5" width="100" height="40"/>
+            <LayoutNode id="n16" x="1150" y="312.5" width="100" height="40"/>
+        </DiagramLayout>
 
-  <!-- File Import Node -->
-  <Node id="n1" type="FileImport">
-    <Name>FileImport_Titanic</Name>
-    <Properties>
-      <Property name="DataSourceName">Titanic_Data</Property>
-      <Property name="FileName">H:/Downloads/titanic.csv</Property>
-      <Property name="AdvancedAdvisor">Yes</Property>
-      <Property name="Delimiter">,</Property>
-      <Property name="HasHeader">Yes</Property>
-    </Properties>
-  </Node>
-
-  <!-- StatExplore Node (EDA) -->
-  <Node id="n2" type="StatExplore">
-    <Name>StatExplore</Name>
-    <Properties/>
-  </Node>
-
-  <!-- Impute Node -->
-  <Node id="n3" type="Impute">
-    <Name>Impute</Name>
-    <Properties>
-      <Property name="CreateMissingIndicators">Yes</Property>
-      <Property name="ImputeNumeric">Median</Property>
-      <Property name="ImputeNominal">Mode</Property>
-    </Properties>
-  </Node>
-
-  <!-- Transform Variables -->
-  <Node id="n4" type="TransformVariables">
-    <Name>Transform</Name>
-    <Properties>
-      <Property name="StandardizeNumeric">Yes</Property>
-      <Property name="DeriveExpressions">FamilySize = SibSp + Parch + 1</Property>
-    </Properties>
-  </Node>
-
-  <!-- Variable Selection -->
-  <Node id="n5" type="VariableSelection">
-    <Name>VarSelect</Name>
-    <Properties>
-      <Property name="SelectionMethod">DecisionTreeImportance</Property>
-      <Property name="NumToSelect">8</Property>
-    </Properties>
-  </Node>
-
-  <!-- Data Partition -->
-  <Node id="n6" type="DataPartition">
-    <Name>DataPartition</Name>
-    <Properties>
-      <Property name="TrainPercent">70</Property>
-      <Property name="ValidPercent">15</Property>
-      <Property name="TestPercent">15</Property>
-      <Property name="RandomSeed">42539</Property>
-    </Properties>
-  </Node>
-
-  <!-- Decision Trees -->
-  <Node id="n7" type="DecisionTree">
-    <Name>DT_Binary_shallow</Name>
-    <Properties>
-      <Property name="SplitType">Binary</Property>
-      <Property name="MaxDepth">4</Property>
-      <Property name="MinLeafSize">20</Property>
-      <Property name="Prune">Yes</Property>
-    </Properties>
-  </Node>
-
-  <Node id="n8" type="DecisionTree">
-    <Name>DT_Multiway</Name>
-    <Properties>
-      <Property name="SplitType">Multiway</Property>
-      <Property name="MaxDepth">3</Property>
-      <Property name="MinLeafSize">15</Property>
-    </Properties>
-  </Node>
-
-  <Node id="n9" type="DecisionTree">
-    <Name>DT_Deep_noPrune</Name>
-    <Properties>
-      <Property name="SplitType">Binary</Property>
-      <Property name="MaxDepth">12</Property>
-      <Property name="MinLeafSize">2</Property>
-      <Property name="Prune">No</Property>
-    </Properties>
-  </Node>
-
-  <Node id="n10" type="DecisionTree">
-    <Name>DT_ClassBalance</Name>
-    <Properties>
-      <Property name="SplitType">Binary</Property>
-      <Property name="ClassPriors">Balance</Property>
-      <Property name="MaxDepth">6</Property>
-      <Property name="MinLeafSize">10</Property>
-    </Properties>
-  </Node>
-
-  <!-- Neural Networks -->
-  <Node id="n11" type="NeuralNetwork">
-    <Name>NN_Small</Name>
-    <Properties>
-      <Property name="HiddenLayers">1</Property>
-      <Property name="HiddenNeurons">5</Property>
-      <Property name="Activation">Sigmoid</Property>
-      <Property name="Epochs">100</Property>
-    </Properties>
-  </Node>
-
-  <Node id="n12" type="NeuralNetwork">
-    <Name>NN_Medium_L2</Name>
-    <Properties>
-      <Property name="HiddenLayers">1</Property>
-      <Property name="HiddenNeurons">15</Property>
-      <Property name="WeightDecay">0.001</Property>
-      <Property name="Epochs">200</Property>
-    </Properties>
-  </Node>
-
-  <Node id="n13" type="NeuralNetwork">
-    <Name>NN_Deep_EarlyStop</Name>
-    <Properties>
-      <Property name="HiddenLayers">2</Property>
-      <Property name="HiddenNeurons">10,5</Property>
-      <Property name="EarlyStopping">Yes</Property>
-      <Property name="Epochs">300</Property>
-    </Properties>
-  </Node>
-
-  <Node id="n14" type="NeuralNetwork">
-    <Name>NN_AltActivation</Name>
-    <Properties>
-      <Property name="HiddenLayers">1</Property>
-      <Property name="HiddenNeurons">15</Property>
-      <Property name="Activation">Tanh</Property>
-      <Property name="WeightDecay">0.01</Property>
-      <Property name="Epochs">200</Property>
-    </Properties>
-  </Node>
-
-  <!-- Score Node -->
-  <Node id="n15" type="Score">
-    <Name>Score_All</Name>
-    <Properties/>
-  </Node>
-
-  <!-- Model Comparison -->
-  <Node id="n16" type="ModelComparison">
-    <Name>ModelCompare</Name>
-    <Properties/>
-  </Node>
-
-  <!-- Connections -->
-  <Links>
-    <Link from="n1" to="n2"/>
-    <Link from="n2" to="n3"/>
-    <Link from="n3" to="n4"/>
-    <Link from="n4" to="n5"/>
-    <Link from="n5" to="n6"/>
-
-    <Link from="n6" to="n7"/>
-    <Link from="n6" to="n8"/>
-    <Link from="n6" to="n9"/>
-    <Link from="n6" to="n10"/>
-
-    <Link from="n6" to="n11"/>
-    <Link from="n6" to="n12"/>
-    <Link from="n6" to="n13"/>
-    <Link from="n6" to="n14"/>
-
-    <Link from="n7" to="n15"/>
-    <Link from="n8" to="n15"/>
-    <Link from="n9" to="n15"/>
-    <Link from="n10" to="n15"/>
-
-    <Link from="n11" to="n15"/>
-    <Link from="n12" to="n15"/>
-    <Link from="n13" to="n15"/>
-    <Link from="n14" to="n15"/>
-
-    <Link from="n15" to="n16"/>
-  </Links>
-
-  <!-- Metadata -->
-  <Metadata>
-    <Target>Survived</Target>
-  </Metadata>
-</EMDiagram>
+        <!-- Node Definitions -->
+        <Node id="n1" type="FileImport" name="FileImport_Data">
+            <NodeOptions>
+                <Property name="DataSourceName" value="titanic"/>
+                <Property name="FileName" value="H:/Downloads/titanic.csv"/>
+                <Property name="AdvancedAdvisor" value="Yes"/>
+                <Property name="Delimiter" value=","/>
+                <Property name="HasHeader" value="Yes"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n2" type="StatExplore" name="StatExplore">
+            <NodeOptions/>
+        </Node>
+        <Node id="n3" type="Impute" name="Impute">
+            <NodeOptions>
+                <Property name="CreateMissingIndicators" value="Yes"/>
+                <Property name="ImputeNumeric" value="Median"/>
+                <Property name="ImputeNominal" value="Mode"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n4" type="TransformVariables" name="Transform">
+            <NodeOptions>
+                <Property name="StandardizeNumeric" value="Yes"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n5" type="VariableSelection" name="VarSelect">
+            <NodeOptions>
+                <Property name="SelectionMethod" value="DecisionTreeImportance"/>
+                <Property name="NumToSelect" value="8"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n6" type="DataPartition" name="DataPartition">
+            <NodeOptions>
+                <Property name="TrainPercent" value="70"/>
+                <Property name="ValidPercent" value="15"/>
+                <Property name="TestPercent" value="15"/>
+                <Property name="RandomSeed" value="42539"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n7" type="DecisionTree" name="DT_Binary_shallow">
+            <NodeOptions>
+                <Property name="SplitType" value="Binary"/>
+                <Property name="MaxDepth" value="4"/>
+                <Property name="MinLeafSize" value="20"/>
+                <Property name="Prune" value="Yes"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n8" type="DecisionTree" name="DT_Multiway">
+            <NodeOptions>
+                <Property name="SplitType" value="Multiway"/>
+                <Property name="MaxDepth" value="3"/>
+                <Property name="MinLeafSize" value="15"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n9" type="DecisionTree" name="DT_Deep_noPrune">
+            <NodeOptions>
+                <Property name="SplitType" value="Binary"/>
+                <Property name="MaxDepth" value="12"/>
+                <Property name="MinLeafSize" value="2"/>
+                <Property name="Prune" value="No"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n10" type="DecisionTree" name="DT_ClassBalance">
+            <NodeOptions>
+                <Property name="SplitType" value="Binary"/>
+                <Property name="ClassPriors" value="Balance"/>
+                <Property name="MaxDepth" value="6"/>
+                <Property name="MinLeafSize" value="10"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n11" type="NeuralNetwork" name="NN_Small">
+            <NodeOptions>
+                <Property name="HiddenLayers" value="1"/>
+                <Property name="HiddenNeurons" value="5"/>
+                <Property name="Activation" value="Sigmoid"/>
+                <Property name="Epochs" value="100"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n12" type="NeuralNetwork" name="NN_Medium_L2">
+            <NodeOptions>
+                <Property name="HiddenLayers" value="1"/>
+                <Property name="HiddenNeurons" value="15"/>
+                <Property name="WeightDecay" value="0.001"/>
+                <Property name="Epochs" value="200"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n13" type="NeuralNetwork" name="NN_Deep_EarlyStop">
+            <NodeOptions>
+                <Property name="HiddenLayers" value="2"/>
+                <Property name="HiddenNeurons" value="10,5"/>
+                <Property name="EarlyStopping" value="Yes"/>
+                <Property name="Epochs" value="300"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n14" type="NeuralNetwork" name="NN_AltActivation">
+            <NodeOptions>
+                <Property name="HiddenLayers" value="1"/>
+                <Property name="HiddenNeurons" value="15"/>
+                <Property name="Activation" value="Tanh"/>
+                <Property name="WeightDecay" value="0.01"/>
+                <Property name="Epochs" value="200"/>
+            </NodeOptions>
+        </Node>
+        <Node id="n15" type="Score" name="Score_All">
+            <NodeOptions/>
+        </Node>
+        <Node id="n16" type="ModelComparison" name="ModelCompare">
+            <NodeOptions/>
+        </Node>
+        <Links>
+            <Link from="n1:Output" to="n2:Input"/>
+            <Link from="n2:Output" to="n3:Input"/>
+            <Link from="n3:Output" to="n4:Input"/>
+            <Link from="n4:Output" to="n5:Input"/>
+            <Link from="n5:Output" to="n6:Input"/>
+            <Link from="n6:Output" to="n7:Input"/>
+            <Link from="n6:Output" to="n8:Input"/>
+            <Link from="n6:Output" to="n9:Input"/>
+            <Link from="n6:Output" to="n10:Input"/>
+            <Link from="n6:Output" to="n11:Input"/>
+            <Link from="n6:Output" to="n12:Input"/>
+            <Link from="n6:Output" to="n13:Input"/>
+            <Link from="n6:Output" to="n14:Input"/>
+            <Link from="n7:Output" to="n15:Input"/>
+            <Link from="n8:Output" to="n15:Input"/>
+            <Link from="n9:Output" to="n15:Input"/>
+            <Link from="n10:Output" to="n15:Input"/>
+            <Link from="n11:Output" to="n15:Input"/>
+            <Link from="n12:Output" to="n15:Input"/>
+            <Link from="n13:Output" to="n15:Input"/>
+            <Link from="n14:Output" to="n15:Input"/>
+            <Link from="n15:Output" to="n16:Input"/>
+        </Links>
+        <NodeMetadata id="n1">
+            <Metadata>
+                <Variable name="Survived" role="target" level="binary"/>
+            </Metadata>
+        </NodeMetadata>
+    </Diagram>
+</Project>
